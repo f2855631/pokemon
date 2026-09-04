@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>寶可夢圖鑑</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        img { height: 60px; }
+        nav { margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+<nav>
+    <a th:href="@{/pokemons}">寶可夢圖鑑</a> |
+    <a th:href="@{/caught}">我收服的寶可夢</a>
+</nav>
+
+<h1>寶可夢圖鑑</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>圖鑑編號</th>
+        <th>圖片</th>
+        <th>名稱</th>
+        <th>屬性</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pokemon : ${pokemons}">
+        <td th:text="${pokemon.pokedexNumber}"></td>
+        <td><img th:if="${pokemon.imageUrl}" th:src="${pokemon.imageUrl}" alt=""></td>
+        <td th:text="${pokemon.name}"></td>
+        <td th:text="${pokemon.types}"></td>
+        <td><a th:href="@{/caught/new(pokemonId=${pokemon.id})}">收服</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
