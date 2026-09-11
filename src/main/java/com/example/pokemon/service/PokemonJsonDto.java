@@ -23,4 +23,10 @@ public class PokemonJsonDto {
     private String image;
 
     private List<String> types;
+
+    @JsonProperty("form_type")
+    private String formType;
+
+    @JsonProperty("form_name")
+    private String formName;
 }

@@ -33,4 +33,14 @@ public class Pokemon {
     private String types;
 
     private String imageUrl;
+
+    /**
+     * 形態類型，例如 "mega"、"gmax"；基礎形態則為 null
+     */
+    private String formType;
+
+    /**
+     * 形態名稱，例如 "超極巨化"；沒有特別形態名稱則為 null
+     */
+    private String formName;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * 應用程式啟動時，若資料庫是空的，就從 GitHub 上的寶可夢爬蟲專案抓 JSON 匯入種子資料。
- * 只取 sub_id == 0（基礎形態），避免超級進化/地區形態等變體造成重複資料。
+ * 基礎形態、Mega 進化、超極巨化等所有變體全部匯入，並保留 formType/formName 供畫面標示區分。
  */
 @Slf4j
 @Component
@@ -51,7 +51,6 @@ public class PokemonDataSeeder implements CommandLineRunner {
         });
 
         List<Pokemon> pokemons = dtoList.stream()
-                .filter(dto -> dto.getSubId() == 0)
                 .map(this::toEntity)
                 .toList();
 
@@ -65,6 +64,12 @@ public class PokemonDataSeeder implements CommandLineRunner {
         pokemon.setName(dto.getName());
         pokemon.setTypes(String.join(",", dto.getTypes()));
         pokemon.setImageUrl(IMAGE_BASE_URL + dto.getImage());
+        pokemon.setFormType(blankToNull(dto.getFormType()));
+        pokemon.setFormName(blankToNull(dto.getFormName()));
         return pokemon;
+    }
+
+    private String blankToNull(String value) {
+        return (value == null || value.isBlank()) ? null : value;
     }
 }
