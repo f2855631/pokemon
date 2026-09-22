@@ -9,15 +9,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// 對應資料庫的 pokemon 資料表，圖鑑資料，唯讀（不會被使用者修改）
 @Entity
 @Table(name = "pokemon")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Data // 自動產生 getter/setter/toString/equals/hashCode
+@NoArgsConstructor // 自動產生空建構子 Pokemon()
+@AllArgsConstructor // 自動產生全欄位建構子
 public class Pokemon {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // 主鍵
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // id 由資料庫自動遞增產生
     private Long id;
 
     /**
