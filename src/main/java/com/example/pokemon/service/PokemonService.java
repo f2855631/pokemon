@@ -1,6 +1,7 @@
 package com.example.pokemon.service;
 
 import com.example.pokemon.entity.Pokemon;
+import com.example.pokemon.exception.ResourceNotFoundException;
 import com.example.pokemon.repository.PokemonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,6 @@ public class PokemonService {
     // 依 id 找單一寶可夢，找不到就丟例外（讓呼叫的地方知道發生錯誤）
     public Pokemon findById(Long id) {
         return pokemonRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("找不到寶可夢 id=" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("找不到寶可夢 id=" + id));
     }
 }

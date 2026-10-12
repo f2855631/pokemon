@@ -3,6 +3,8 @@ package com.example.pokemon.controller;
 import com.example.pokemon.entity.CaughtPokemon;
 import com.example.pokemon.service.CaughtPokemonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,9 +39,11 @@ public class CaughtPokemonApiController {
     }
 
     // POST /api/caught -> 新增，前端傳 JSON body 會自動轉成 CaughtPokemonRequest 物件
+    // 用 ResponseEntity 自己指定狀態碼：新增成功回 201 Created（預設會是 200 OK）
     @PostMapping
-    public void create(@RequestBody CaughtPokemonRequest request) {
+    public ResponseEntity<Void> create(@RequestBody CaughtPokemonRequest request) {
         caughtPokemonService.create(request.getPokemonId(), request.getNickname(), request.getCaughtDate());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // PUT /api/caught/{id} -> 更新

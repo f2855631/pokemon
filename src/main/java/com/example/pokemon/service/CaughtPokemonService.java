@@ -2,6 +2,7 @@ package com.example.pokemon.service;
 
 import com.example.pokemon.entity.CaughtPokemon;
 import com.example.pokemon.entity.Pokemon;
+import com.example.pokemon.exception.ResourceNotFoundException;
 import com.example.pokemon.repository.CaughtPokemonRepository;
 import com.example.pokemon.repository.PokemonRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +28,10 @@ public class CaughtPokemonService {
 
     // 依 id 查單筆：findById 回傳「可能有可能沒有」的 Optional，
     // orElseThrow 負責拆箱——有就回傳，沒有就丟例外中斷（不回傳 null）
+    // 丟 ResourceNotFoundException，GlobalExceptionHandler 會把它轉成 404
     public CaughtPokemon findById(Long id) {
         return caughtPokemonRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("找不到收服紀錄 id=" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("找不到收服紀錄 id=" + id));
     }
 
     // 新增：先 new 一個空物件，呼叫 applyChanges 把資料套進去，再存進資料庫
